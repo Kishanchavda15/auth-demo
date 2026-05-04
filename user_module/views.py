@@ -7,6 +7,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import  Response
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView, ListAPIView
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
+from rest_framework_simplejwt.views import TokenViewBase
 
 from user_module.models import User
 from user_module.serializer import UserSerializer, LoginUserSerializer, PasswordUpdateSerializer
@@ -28,6 +29,7 @@ class LoginUser(ListCreateAPIView):
     queryset = User.objects.all()
     pagination_class =PageNumberPagination
 
+
     def post(self, request, *args, **kwargs):
         data = request.data
         serializer = LoginUserSerializer(data=data)
@@ -46,7 +48,7 @@ class LoginUser(ListCreateAPIView):
             print("password incorrect")
             return Response ({"massage":"Invalid Password"},status=HTTP_400_BAD_REQUEST)
 
-        return Response({"type":True , "user":user.email},status=HTTP_200_OK)
+        return Response({"type":True , "user":user.email},status=HTTP_200_OK )
 
 class PasswordUpdate(RetrieveUpdateAPIView):
     serializer_class = PasswordUpdateSerializer
